@@ -78,7 +78,7 @@ def getFace(rects, image):
     return image
 
 def isBlinking(eye, thresh):
-    return True if eye_aspect_ratio(eye) < thresh - 0.13 else False
+    return True if eye_aspect_ratio(eye) < thresh - 0.3 else False
 
 def eye_aspect_ratio(eye):
     p2_minus_p6 = dist.euclidean(eye[1], eye[5])
