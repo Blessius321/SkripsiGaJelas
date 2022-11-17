@@ -18,7 +18,7 @@ from scipy.spatial import distance as dist
 from usefulFunctions import *
 
 
-label = ['kiri atas', 'kanan atas', 'kiri bawah', 'kanan bawah']
+label = ['kiri atas', 'kanan atas', 'kiri bawah', 'kanan bawah', "halo"]
 
 getTime = []
 cnnTime = []
