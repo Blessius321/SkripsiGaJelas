@@ -51,7 +51,7 @@ def getEyes(rects, gray, image, isShape = False):
         try:
             image = cv2.resize(image, (100,50))
         except:
-            return (int)-1
+            return -1
         cv2.imshow("mata", image)
         top = max([max(x) for x in image])
         image = (torch.from_numpy(np.array([[image]])).to(dtype=torch.float, device=device, non_blocking=True)) / top
@@ -66,7 +66,7 @@ def getFace(rects, image):
         try:
             image = cv2.resize(image, (100,100))
         except:
-            return (int)-1
+            return -1
         cv2.imshow("muka", image)
 
         top = max([max(x) for x in image])
