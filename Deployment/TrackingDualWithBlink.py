@@ -1,24 +1,10 @@
-from math import floor
-import os
 import cv2 
-from imutils import face_utils
-import dlib
-import cv2
-import numpy as np
-from dualModel import DualModel
-from torch.optim import Adam
-from torch import nn 
-from sklearn.model_selection import train_test_split
-import numpy as np 
 import torch 
-import os
 import cv2
-from time import time 
-from scipy.spatial import distance as dist
 from usefulFunctions import *
 
 
-label = ['kiri atas', 'kanan atas', 'kiri bawah', 'kanan bawah']
+label = ['kiri atas', 'kanan atas', 'kiri bawah', 'kanan bawah', "unkown"]
 
 getTime = []
 cnnTime = []
@@ -41,24 +27,18 @@ with torch.no_grad():
             if sum(mov_avrg)/len(mov_avrg) < 0.2 :
                 mata = getEyes(rects, gray, image)
                 muka = getFace(rects, image)
-                # getTime.append(time() - timer)
-                output = model(mata, muka)
-                prediction = torch.max(output, 1)
-                # cnnTime.append(time() - timer - getTime[-1])
-                class_mov_avrg.append(int(prediction.indices))
-                if len(class_mov_avrg) > 10:
-                    class_mov_avrg.pop(0)
-                print(label[round(sum(class_mov_avrg) / len(class_mov_avrg))])
-                # totalTime.append(time() - timer)
+                if torch.is_tensor(mata) and torch.is_tensor(muka):
+                    output = model(mata, muka)
+                    prediction = torch.max(output, 1)
+                    class_mov_avrg.append(int(prediction.indices))
+                    if len(class_mov_avrg) > 10:
+                        class_mov_avrg.pop(0)
+                    print(label[round(sum(class_mov_avrg) / len(class_mov_avrg))])
+                else: 
+                    break
             else:
                 print("eye is closed")
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
-print(f"average getTime = {sum(getTime)/len(getTime)}")
-print(f"average cnnTime = {sum(cnnTime)/len(cnnTime)}")
-print(f"average facialLandmarkTime = {sum(facialLandmarkTime)/len(facialLandmarkTime)}")
-print(f"average FPS = {1/(sum(totalTime)/len(totalTime))}")
-            
 

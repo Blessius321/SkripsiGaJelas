@@ -1,26 +1,21 @@
 from math import floor
-import os
 import cv2 
 from imutils import face_utils
 import dlib
 import cv2
 import numpy as np
-from dualModel import DualModel
-from torch.optim import Adam
-from torch import nn 
-from sklearn.model_selection import train_test_split
+from dualModelFiveClass import DualModel
 import numpy as np 
 import torch 
-import os
 import cv2
 from time import time 
 from scipy.spatial import distance as dist
 
 # Buka kamera
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(4)
 
 # Shape predictor for face landmark
-p = "/Model/shape_predictor_68_face_landmarks.dat"
+p = "Model/shape_predictor_68_face_landmarks.dat"
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(p)
 
@@ -32,7 +27,7 @@ print(device)
 model = DualModel().to(device=device)
 
 # MODEL PATH
-model.load_state_dict(torch.load("Model/fourClassModelDualModel.pth", map_location=device))
+model.load_state_dict(torch.load("Model/DualModelVx.pth", map_location=device))
 model.eval()
 
 
@@ -53,11 +48,10 @@ def getEyes(rects, gray, image, isShape = False):
         if isShape:
             return shape[36: 42]
         image = image[shape[38][1]-10:shape[42][1]+10 , shape[37][0]-20:shape[40][0]+20] 
-        # image = image[shape[38][1]-40:shape[42][1]+40 , shape[37][0]-60:shape[40][0]+60]
-        # image = image[shape[1][1]-10:shape[5][1]+10 , shape[0][0]-20:shape[3][0]+20]
-        # image = image[shape[1][1]-5:shape[5][1]+5 , shape[0][0]-10:shape[3][0]+10]  
-        image = cv2.resize(image, (100,50))
-        # image = np.array(image)
+        try:
+            image = cv2.resize(image, (100,50))
+        except:
+            return (int)-1
         cv2.imshow("mata", image)
         top = max([max(x) for x in image])
         image = (torch.from_numpy(np.array([[image]])).to(dtype=torch.float, device=device, non_blocking=True)) / top
@@ -69,8 +63,10 @@ def getFace(rects, image):
     for (i,rect) in enumerate(rects):
         (x,y,w,h) = face_utils.rect_to_bb(rect=rect)
         image = image[y:y+h, x:x+w]
-        image = cv2.resize(image, (100,100))
-        # image = np.array(image)
+        try:
+            image = cv2.resize(image, (100,100))
+        except:
+            return (int)-1
         cv2.imshow("muka", image)
 
         top = max([max(x) for x in image])
