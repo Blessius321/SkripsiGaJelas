@@ -22,7 +22,7 @@ model = DualModel().to(device=device)
 model.load_state_dict(torch.load("fourClassModelDualModel.pth", map_location=device))
 model.eval()
 
-p = "shape_predictor_68_face_landmarks.dat"
+p = "Model/shape_predictor_68_face_landmarks.dat"
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(p)
 

@@ -10,7 +10,7 @@ import torch
 import os
 import cv2
 import copy
-from trainHelperFunction import *
+from training.trainHelperFunction import *
 
 MODELNAME = "DualModelVx"
 
