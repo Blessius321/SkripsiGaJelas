@@ -16,9 +16,6 @@ INIT_LR = 0.001
 BATCH_SIZE = 64
 EPOCHS = 10
 
-TRAIN_SPLIT = 0.75
-VAL_SPLIT = 1 - TRAIN_SPLIT
-
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(f"Training on:{device}")
 
@@ -130,10 +127,29 @@ def trainDualModel(mata, muka, epoch = EPOCHS, modelPath = None, modelName = Non
 
     if modelPath is None:
       if modelName is None:
-        torch.save(model.state_dict(), f"./TrainedModelOn{datetime.datetime.now()}{type(model).__name__}.pth")
+        torch.save(model.state_dict(), f"Model/TrainedModelOn{datetime.datetime.now()}{type(model).__name__}.pth")
       else:
-        torch.save(model.state_dict(), f"./{modelName}.pth")
+        torch.save(model.state_dict(), f"Model/{modelName}.pth")
     else:
-      torch.save(model.state_dict(), modelPath)           
+      torch.save(model.state_dict(), modelPath) 
+    print("Model is Saved!!")          
 
     return
+
+def testing(mataTest, mukaTest, MODELNAME):
+  if os.path.exists(f"Model/{MODELNAME}"):
+    print("Model Doesn't exist")
+    return None
+  model = DualModel().to(device=device)
+  model.load_state_dict(f"Model/{MODELNAME}")
+  
+  correct = 0
+  total = 0
+  with torch.no_grad():
+    for i, (mataIm, mataLabel) in enumerate(mataTest):
+      (mukaIm, mukaLabel) = mukaTest[i]
+      output = model(mataIm, mukaIm)
+      _, predicted = torch.max(output.data, 1)
+      total += mataLabel.size(0)
+      correct += (predicted == mataLabel).sum().item()
+  print(f"accuracy of the model on {len(mataTest)} images: {100 * correct /total}%")

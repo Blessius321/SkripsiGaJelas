@@ -35,7 +35,7 @@ with torch.no_grad():
                         class_mov_avrg.pop(0)
                     print(label[round(sum(class_mov_avrg) / len(class_mov_avrg))])
                 else: 
-                    break
+                    pass
             else:
                 print("eye is closed")
 
