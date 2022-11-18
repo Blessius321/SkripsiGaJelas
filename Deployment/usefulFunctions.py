@@ -4,7 +4,7 @@ from imutils import face_utils
 import dlib
 import cv2
 import numpy as np
-from dualModelFiveClass import DualModel
+from Deployment.dualModelFiveClass import DualModel
 import numpy as np 
 import torch 
 import cv2

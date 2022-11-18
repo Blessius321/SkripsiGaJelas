@@ -141,7 +141,7 @@ def testing(mataTest, mukaTest, MODELNAME):
     print("Model Doesn't exist")
     return None
   model = DualModel().to(device=device)
-  model.load_state_dict(f"Model/{MODELNAME}")
+  model.load_state_dict(torch.load(f"Model/{MODELNAME}.pth"))
   
   correct = 0
   total = 0
