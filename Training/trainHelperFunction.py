@@ -86,11 +86,11 @@ def loadMuka(path):
   return totalHolder
 
 
-def trainDualModel(mata, muka, epoch = EPOCHS, modelPath = None, modelName = None, flag = None):
+def trainDualModel(mata, muka, epoch = EPOCHS, modelName = None, flag = None):
     model = DualModel().to(device=device)
-    if not(modelPath is None):
+    if os.path.isfile(f"Model/{modelName}"):
       print("model is pretrained")
-      model.load_state_dict(torch.load(modelPath))
+      model.load_state_dict(torch.load(f"Model/{modelName}"))
     else:
       print("this is a blank model")
     criterion = nn.CrossEntropyLoss()
@@ -125,23 +125,17 @@ def trainDualModel(mata, muka, epoch = EPOCHS, modelPath = None, modelName = Non
               # print("tensor doesn't match")
               pass
 
-    if modelPath is None:
-      if modelName is None:
-        torch.save(model.state_dict(), f"Model/TrainedModelOn{datetime.datetime.now()}{type(model).__name__}.pth")
-      else:
-        torch.save(model.state_dict(), f"Model/{modelName}.pth")
+    if modelName is None:
+      torch.save(model.state_dict(), f"Model/TrainedModelOn{datetime.datetime.now()}{type(model).__name__}")
     else:
-      torch.save(model.state_dict(), modelPath) 
+      torch.save(model.state_dict(), f"Model/{modelName}")
     print("Model is Saved!!")          
 
     return
 
-def testing(mataTest, mukaTest, MODELNAME):
-  if os.path.exists(f"Model/{MODELNAME}"):
-    print("Model Doesn't exist")
-    return None
+def testing(mataTest, mukaTest, modelName):
   model = DualModel().to(device=device)
-  model.load_state_dict(torch.load(f"Model/{MODELNAME}.pth"))
+  model.load_state_dict(torch.load(f"Model/{modelName}"))
   
   correct = 0
   total = 0
