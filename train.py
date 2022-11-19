@@ -49,9 +49,10 @@ if __name__ == "__main__":
     validMode = ["train", 'test', 'train test']
     if not arg.mode in validMode:
         print("mode is not valid, use 'train', 'test', or 'train test'")
-    elif not os.path.isfile(f"Model/{arg.modelName}"):
-        print("model name is not valid, please make sure the model is in the Model folder")
-        print(f"given model name is {arg.modelName}")
     else:
+        if os.path.isfile(f"Model/{arg.modelName}"):
+            print("model is pretrained model")
+        else:
+            print("model is a blank model")
         main(arg)
 

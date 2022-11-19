@@ -28,11 +28,9 @@ class DualModel(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(kernel_size = 2, stride = 2))
         self.flatten = nn.Flatten()
-        self.fc = nn.Linear(10912, 400)
+        self.fc = nn.Linear(10912, 50)
         self.relu = nn.ReLU()
-        self.fc1 = nn.Linear(400, 100)
-        self.relu1 = nn.ReLU()
-        self.fc2 = nn.Linear(100, 5)
+        self.fc2 = nn.Linear(50, 5)
     
     def forward(self, x, y ):
         out1 = self.layer1(x)
@@ -47,8 +45,6 @@ class DualModel(nn.Module):
 
         out = self.fc(out)
         out = self.relu(out)
-        out = self.fc1(out)
-        out = self.relu1(out)
         out = self.fc2(out)
         return out
 
