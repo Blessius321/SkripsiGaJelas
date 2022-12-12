@@ -12,7 +12,7 @@ from time import time
 from scipy.spatial import distance as dist
 
 # Buka kamera
-cap = cv2.VideoCapture(4)
+cap = cv2.VideoCapture(0)
 
 # Shape predictor for face landmark
 p = "Model/shape_predictor_68_face_landmarks.dat"
@@ -27,7 +27,7 @@ print(device)
 model = DualModel().to(device=device)
 
 # MODEL PATH
-model.load_state_dict(torch.load("Model/DualModelVx.pth", map_location=device))
+model.load_state_dict(torch.load("Model/evenEvenSmallerDualModel.pth", map_location=device))
 model.eval()
 
 
