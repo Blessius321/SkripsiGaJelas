@@ -2,12 +2,10 @@ from math import floor
 import cv2 
 from imutils import face_utils
 import dlib
-import cv2
 import numpy as np
 from Deployment.dualModelFiveClass import DualModel
 import numpy as np 
 import torch 
-import cv2
 from time import time 
 from scipy.spatial import distance as dist
 
@@ -23,7 +21,7 @@ predictor = dlib.shape_predictor(p)
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 print(device)
 
-# ganti angka buat ganti kamera
+# load model ke device
 model = DualModel().to(device=device)
 
 # MODEL PATH
@@ -73,14 +71,16 @@ def getFace(rects, image):
         image = (torch.from_numpy(np.array([[image]])).to(dtype=torch.float, device=device, non_blocking=True)) / top
     return image
 
-def isBlinking(eye, thresh):
-    return True if eye_aspect_ratio(eye) < thresh - 0.3 else False
+def isBlinking(eye, thresh, debug=False):
+    return True if eye_aspect_ratio(eye, debug=debug) < thresh-0.12 else False
 
-def eye_aspect_ratio(eye):
+def eye_aspect_ratio(eye, debug=False):
     p2_minus_p6 = dist.euclidean(eye[1], eye[5])
     p3_minus_p5 = dist.euclidean(eye[2], eye[4])
     p1_minus_p4 = dist.euclidean(eye[0], eye[3])
     ear = (p2_minus_p6 + p3_minus_p5) / (2.0 * p1_minus_p4)
+    if debug:
+        print(f"EAR IS: {ear}")
     return ear
 
 def calibration():
