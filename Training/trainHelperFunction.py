@@ -252,8 +252,9 @@ def confusionMatrix(mataTest, mukaTest, modelName):
   classes = ('Kiri Atas', 'Kanan Atas', 'Kiri Bawah', 'Kanan Bawah', 'Unknown')
 
   cf_matrix = confusion_matrix(y_true=y_true, y_pred=y_pred)
-  df_cm = pd.DataFrame(cf_matrix/np.sum(cf_matrix) *10, index = [i for i in classes],
+  df_cm = pd.DataFrame(cf_matrix, index = [i for i in classes],
                        columns = [i for i in classes])
   plt.figure(figsize = (12,7))
-  sn.heatmap(df_cm, annot=True)
+  print(df_cm)
+  sn.heatmap(df_cm, annot=True, fmt='d')
   plt.savefig('output.png')
