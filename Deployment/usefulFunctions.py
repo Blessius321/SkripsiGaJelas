@@ -38,7 +38,7 @@ def getRect():
     rects = detector(gray, 0)
     return (rects, gray, image)
 
-def getEyes(rects, gray, image, isShape = False):
+def getEyes(rects, gray, image, isShape = False, showFrames = True):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     for (i, rect) in enumerate(rects):
         shape = predictor(gray, rect)
@@ -50,13 +50,14 @@ def getEyes(rects, gray, image, isShape = False):
             image = cv2.resize(image, (100,50))
         except:
             return -1
-        cv2.imshow("mata", image)
+        if showFrames:
+            cv2.imshow("mata", image)
         top = max([max(x) for x in image])
         image = (torch.from_numpy(np.array([[image]])).to(dtype=torch.float, device=device, non_blocking=True)) / top
     
     return image
 
-def getFace(rects, image):
+def getFace(rects, image, showFrames = True):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     for (i,rect) in enumerate(rects):
         (x,y,w,h) = face_utils.rect_to_bb(rect=rect)
@@ -65,8 +66,8 @@ def getFace(rects, image):
             image = cv2.resize(image, (100,100))
         except:
             return -1
-        cv2.imshow("muka", image)
-
+        if showFrames:
+            cv2.imshow("muka", image)
         top = max([max(x) for x in image])
         image = (torch.from_numpy(np.array([[image]])).to(dtype=torch.float, device=device, non_blocking=True)) / top
     return image

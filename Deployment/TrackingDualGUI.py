@@ -22,8 +22,8 @@ def findGaze():
             if len(mov_avrg) > 5:
                 mov_avrg.pop(0)
             if sum(mov_avrg)/len(mov_avrg) < 0.2 :
-                mata = getEyes(rects, gray, image)
-                muka = getFace(rects, image)
+                mata = getEyes(rects, gray, image, showFrames =False)
+                muka = getFace(rects, image, showFrames = False)
                 if torch.is_tensor(mata) and torch.is_tensor(muka):
                     output = model(mata, muka)
                     prediction = torch.max(output, 1)

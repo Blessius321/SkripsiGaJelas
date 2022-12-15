@@ -1,17 +1,17 @@
-import PySimpleGUIQt as sg
+import PySimpleGUI as sg
 
 pageSatu = [
     [
-        sg.Button(image_filename= 'kepala.png', enable_events=True, key="-1-", size_px=(540,360), button_color = ("white", "blue")),
+        sg.Button(image_filename= 'Assets/kepala.png', enable_events=True, key="-1-", button_color = ("white", "#C0EEE4")),
         sg.VSeperator(), 
-        sg.Button(image_filename= 'mata.png', enable_events=True, key="-2-", size_px=(540,360), button_color = ("white", "blue"))
+        sg.Button(image_filename= 'Assets/mata.png', enable_events=True, key="-2-", button_color = ("white", "#C0EEE4"))
     ]
 ]
 pageDua = [
     [
-        sg.Button(image_filename= '', enable_events=True, key="-3-", size_px=(540,360), button_color = ("white", "blue")),
+        sg.Button(image_filename= 'Assets/suara.png', enable_events=True, key="-3-", button_color = ("white", "#C0EEE4")),
         sg.VSeperator(), 
-        sg.Button(image_filename= 'touch.png', enable_events=True, key="-4-", size_px=(540,360), button_color = ("white", "blue"))
+        sg.Button(image_filename= 'Assets/touch.png', enable_events=True, key="-4-", button_color = ("white", "#C0EEE4"))
     ],
 ]
 
@@ -22,16 +22,17 @@ layout = [
         sg.Column(pageSatu, key='-pageSatu-', visible=True), sg.Column(pageDua, key='-pageDua-', visible= False)
     ],
     [
-        sg.HSeperator()
+        sg.HSeparator()
     ],
     [
-        sg.Button(button_text="KIRI", enable_events=True, key="-KIRI BAWAH-", size_px=(540,360), button_color = ("white", "blue")),
+        sg.Button(image_filename="Assets/kiri.png", enable_events=True, key="-KIRI BAWAH-", button_color = ("white", "#C0EEE4")),
         sg.VSeperator(), 
-        sg.Button(button_text="KANAN", enable_events=True, key="-KANAN BAWAH-", size_px=(540,360), button_color = ("white", "blue"))
+        sg.Button(image_filename="Assets/kanan.png", enable_events=True, key="-KANAN BAWAH-",  button_color = ("white", "#C0EEE4"))
     ],
 ]
 
-window = sg.Window(title="TEST", layout=layout, size=(1080, 720), finalize=True)
+window = sg.Window(title="TEST", layout=layout, finalize=True, no_titlebar=True, keep_on_top=False)
+window.maximize()
 buttonClicked = [False, False, False, False]
 buttons = ["-1-", '-2-', '-3-', '-4-']
 page = 1
