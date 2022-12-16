@@ -108,7 +108,7 @@ def trainDualModel(mata, muka, epoch = EPOCHS, modelName = None, flag = None):
         running_loss = 0
         for i, (mataIm, label) in enumerate(mata):
             (mukaIm, mukaLabel) = muka[i]
-            if mata[i][0][0].shape == torch.Size([1, 50, 100]) and muka[700][0][0].shape == torch.Size([1, 100, 100]):
+            if mata[i][0][0].shape == torch.Size([1, 50, 100]) and muka[i][0][0].shape == torch.Size([1, 100, 100]):
               if not mukaLabel == label:
                 print("SALAH CUY")
                 return
@@ -146,10 +146,11 @@ def testing(mataTest, mukaTest, modelName):
   with torch.no_grad():
     for i, (mataIm, mataLabel) in enumerate(mataTest):
       (mukaIm, mukaLabel) = mukaTest[i]
-      output = model(mataIm, mukaIm)
-      _, predicted = torch.max(output.data, 1)
-      total += mataLabel.size(0)
-      correct += (predicted == mataLabel).sum().item()
+      if mataTest[i][0][0].shape == torch.Size([1, 50, 100]) and mukaTest[i][0][0].shape == torch.Size([1, 100, 100]):
+        output = model(mataIm, mukaIm)
+        _, predicted = torch.max(output.data, 1)
+        total += mataLabel.size(0)
+        correct += (predicted == mataLabel).sum().item()
   print(f"accuracy of the model on {len(mataTest)} images: {100 * correct /total}%")
 
 # Testing Code
