@@ -28,7 +28,7 @@ def main(arg):
         print(f"training set muka: {len(mukaTrain)}")
         print(f"test set mata: {len(mataTest)}")
         print(f"test set muka: {len(mukaTest)}")
-        trainDualModel(mataTrain, mukaTrain, 1, modelName = arg.modelName)
+        trainDualModel(mataTrain, mukaTrain, 10, modelName = arg.modelName)
         testing(mataTest, mukaTest, arg.modelName)
 
 if __name__ == "__main__":
