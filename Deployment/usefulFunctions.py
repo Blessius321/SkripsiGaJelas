@@ -45,7 +45,7 @@ def getEyes(rects, gray, image, isShape = False, showFrames = True):
         shape = face_utils.shape_to_np(shape)
         if isShape:
             return shape[36: 42]
-        image = image[shape[38][1]-30:shape[42][1]+30 , shape[37][0]-50:shape[40][0]+50] 
+        image = image[shape[38][1]-10:shape[42][1]+10 , shape[37][0]-20:shape[40][0]+20] 
         try:
             image = cv2.resize(image, (100,50))
         except:

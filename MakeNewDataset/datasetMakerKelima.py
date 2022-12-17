@@ -32,7 +32,7 @@ def getEyes(rects, gray, image):
         shape = predictor(gray, rect)
         shape = face_utils.shape_to_np(shape)
         # image = image[shape[38][1]-40:shape[42][1]+40 , shape[37][0]-60:shape[40][0]+60]
-        image = image[shape[38][1]-30:shape[42][1]+30 , shape[37][0]-50:shape[40][0]+50] 
+        image = image[shape[38][1]-10:shape[42][1]+10 , shape[37][0]-20:shape[40][0]+20] 
         image = cv2.resize(image, (100,50))
     
     return image
