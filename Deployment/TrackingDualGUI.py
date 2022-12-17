@@ -28,7 +28,7 @@ def findGaze():
                     output = model(mata, muka)
                     prediction = torch.max(output, 1)
                     class_mov_avrg.append(int(prediction.indices))
-                    if len(class_mov_avrg) > 10:
+                    if len(class_mov_avrg) > 5:
                         class_mov_avrg.pop(0)
                     print(label[round(sum(class_mov_avrg) / len(class_mov_avrg))])
                     return round(sum(class_mov_avrg) / len(class_mov_avrg))

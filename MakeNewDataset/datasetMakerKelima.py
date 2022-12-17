@@ -10,7 +10,8 @@ import os
 p = "Model/shape_predictor_68_face_landmarks.dat"
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(p)
-cap = cv2.VideoCapture(4)
+cap = cv2.VideoCapture(5)
+_ = cap.read()
 
 classes = [0, 1, 2, 3, 4]
 label = ['kiri atas', 'kanan atas', 'kiri bawah', 'kanan bawah', 'unknown']
@@ -31,7 +32,7 @@ def getEyes(rects, gray, image):
         shape = predictor(gray, rect)
         shape = face_utils.shape_to_np(shape)
         # image = image[shape[38][1]-40:shape[42][1]+40 , shape[37][0]-60:shape[40][0]+60]
-        image = image[shape[38][1]-10:shape[42][1]+10 , shape[37][0]-20:shape[40][0]+20] 
+        image = image[shape[38][1]-30:shape[42][1]+30 , shape[37][0]-50:shape[40][0]+50] 
         image = cv2.resize(image, (100,50))
     
     return image

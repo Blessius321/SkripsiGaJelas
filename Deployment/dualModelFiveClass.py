@@ -1,6 +1,4 @@
-from turtle import forward
 import torch.nn as nn 
-from torch import flatten, Tensor
 import torch
 from torchsummary import summary
 
