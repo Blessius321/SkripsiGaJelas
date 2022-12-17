@@ -25,7 +25,7 @@ print(device)
 model = DualModel().to(device=device)
 
 # MODEL PATH
-model.load_state_dict(torch.load("Model/evenEvenSmallerDualModel.pth", map_location=device))
+model.load_state_dict(torch.load("Model/modelWheelchairBabyPartTwo.pth", map_location=device))
 model.eval()
 
 
